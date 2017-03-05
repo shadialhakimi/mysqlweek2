@@ -32,7 +32,7 @@ app.listen(port, () => {
 
 function addTodo(item) {
 
-    var q="INSERT INTO `todos`(`Name`,`Done`) VALUES ('"+item.Name+"','"+item.Done+"');";
+    var q="INSERT INTO `todos`(`Name`,`Done`) VALUES ('"+ pool.escape(item.Name)+"','"+pool.escape(item.Done)+"');";
     //console.log(q);
     pool.getConnection(function(err, connection) {
         connection.query(q, function(err,rows){
@@ -46,7 +46,7 @@ function addTodo(item) {
 }
 function deletTodo(id) {
 
-    var q="delete from `todos` where id= '"+id+"';";
+    var q="delete from `todos` where id= '"+pool.escape(id)+"';";
     //console.log(q);
     pool.getConnection(function(err, connection) {
         connection.query(q, function(err,rows){
@@ -60,7 +60,7 @@ function deletTodo(id) {
 
 function updateTodo(id,state) {
 
-    var q="update `todos` set `Done`='"+state+"' where Id='"+id+"';";
+    var q="update `todos` set `Done`='"+pool.escape(state)+"' where Id='"+pool.escape(id)+"';";
     //console.log(q);
     pool.getConnection(function(err, connection) {
         connection.query(q, function(err,rows){
